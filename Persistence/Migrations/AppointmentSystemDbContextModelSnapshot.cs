@@ -30,9 +30,8 @@ namespace Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ActionType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ActionType")
+                        .HasColumnType("int");
 
                     b.Property<int>("AdminId")
                         .HasColumnType("int");
@@ -70,9 +69,6 @@ namespace Persistence.Migrations
 
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("AppointmentTime")
-                        .HasColumnType("time");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -115,11 +111,11 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("AvailableDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("AvailableEndTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("AvailableEndTime")
+                        .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("AvailableStartTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("AvailableStartTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -158,6 +154,10 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FeedbackText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeedbackTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -217,7 +217,7 @@ namespace Persistence.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PatientReport", b =>
+            modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -255,14 +255,54 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppointmentId")
-                        .IsUnique();
+                    b.HasIndex("AppointmentId");
 
                     b.HasIndex("DoctorId");
 
                     b.HasIndex("PatientId");
 
                     b.ToTable("PatientReports");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Support", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Issue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Response")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Supports");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -316,9 +356,9 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.AdminAction", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Admin")
-                        .WithMany("AdminActions")
+                        .WithMany()
                         .HasForeignKey("AdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Admin");
@@ -327,13 +367,13 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Doctor")
-                        .WithMany("DoctorAppointments")
+                        .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "Patient")
-                        .WithMany("PatientAppointments")
+                        .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -346,7 +386,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.DoctorSchedule", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Doctor")
-                        .WithMany("DoctorSchedules")
+                        .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -357,9 +397,9 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Feedback", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("Feedbacks")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -368,30 +408,30 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("Notifications")
+                        .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.PatientReport", b =>
+            modelBuilder.Entity("Domain.Entities.Report", b =>
                 {
                     b.HasOne("Domain.Entities.Appointment", "Appointment")
-                        .WithOne("PatientReport")
-                        .HasForeignKey("Domain.Entities.PatientReport", "AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "Doctor")
-                        .WithMany("DoctorReports")
+                        .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "Patient")
-                        .WithMany("PatientReports")
+                        .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -403,29 +443,15 @@ namespace Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Appointment", b =>
+            modelBuilder.Entity("Domain.Entities.Support", b =>
                 {
-                    b.Navigation("PatientReport")
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("Domain.Entities.User", b =>
-                {
-                    b.Navigation("AdminActions");
-
-                    b.Navigation("DoctorAppointments");
-
-                    b.Navigation("DoctorReports");
-
-                    b.Navigation("DoctorSchedules");
-
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("Notifications");
-
-                    b.Navigation("PatientAppointments");
-
-                    b.Navigation("PatientReports");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

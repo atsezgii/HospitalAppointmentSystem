@@ -21,8 +21,8 @@ namespace Persistence.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<int>(type: "int", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -40,7 +40,7 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AdminId = table.Column<int>(type: "int", nullable: false),
-                    ActionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActionType = table.Column<int>(type: "int", nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -55,7 +55,7 @@ namespace Persistence.Migrations
                         column: x => x.AdminId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,7 +67,6 @@ namespace Persistence.Migrations
                     PatientId = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppointmentTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -99,8 +98,8 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     AvailableDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AvailableStartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    AvailableEndTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    AvailableStartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AvailableEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -124,6 +123,7 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
+                    FeedbackTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FeedbackText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -138,7 +138,7 @@ namespace Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,7 +164,33 @@ namespace Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Supports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Issue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Response = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Supports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Supports_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,7 +217,7 @@ namespace Persistence.Migrations
                         column: x => x.AppointmentId,
                         principalTable: "Appointments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_PatientReports_Users_DoctorId",
                         column: x => x.DoctorId,
@@ -239,8 +265,7 @@ namespace Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PatientReports_AppointmentId",
                 table: "PatientReports",
-                column: "AppointmentId",
-                unique: true);
+                column: "AppointmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PatientReports_DoctorId",
@@ -251,6 +276,11 @@ namespace Persistence.Migrations
                 name: "IX_PatientReports_PatientId",
                 table: "PatientReports",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Supports_UserId",
+                table: "Supports",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -270,6 +300,9 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "PatientReports");
+
+            migrationBuilder.DropTable(
+                name: "Supports");
 
             migrationBuilder.DropTable(
                 name: "Appointments");

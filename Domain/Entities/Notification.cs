@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public enum NotificationType
-    {
-        Email,
-        SMS
-    }
-
+ 
     public class Notification : Entity
     {
         public int UserId { get; set; }
@@ -20,6 +16,6 @@ namespace Domain.Entities
         public NotificationType NotificationType { get; set; }
         public string Message { get; set; }
         public DateTime SentAt { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }

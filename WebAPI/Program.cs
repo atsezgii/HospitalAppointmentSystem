@@ -1,8 +1,10 @@
 using Persistence;
+using Core;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddPersistenceServices();
+builder.Services.AddCoreServices();
 
 
 builder.Services.AddControllers();

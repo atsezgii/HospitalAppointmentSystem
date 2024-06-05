@@ -1,4 +1,5 @@
 ﻿using Core.DataAccess;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,23 +9,16 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public enum AppointmentStatus
-    {
-        Booked,
-        Cancelled,
-        Completed
-    }
+   
 
     public class Appointment:Entity
     {
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public TimeSpan AppointmentTime { get; set; }
         public AppointmentStatus Status { get; set; }
-        public User Patient { get; set; }
-        public User Doctor { get; set; }
-        public PatientReport PatientReport { get; set; }
+        public virtual User Patient { get; set; }
+        public virtual User Doctor { get; set; }
 
     }
 }
