@@ -335,12 +335,13 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -350,13 +351,50 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
+
+                    b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Admin", b =>
+                {
+                    b.HasBaseType("Domain.Entities.User");
+
+                    b.ToTable("Admins", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+                {
+                    b.HasBaseType("Domain.Entities.User");
+
+                    b.Property<string>("Specialty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Doctors", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Patient", b =>
+                {
+                    b.HasBaseType("Domain.Entities.User");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.AdminAction", b =>
                 {
-                    b.HasOne("Domain.Entities.User", "Admin")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Admin", "Admin")
+                        .WithMany("AdminActions")
                         .HasForeignKey("AdminId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -366,14 +404,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
                 {
-                    b.HasOne("Domain.Entities.User", "Doctor")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Doctor", "Doctor")
+                        .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", "Patient")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Patient", "Patient")
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -385,8 +423,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.DoctorSchedule", b =>
                 {
-                    b.HasOne("Domain.Entities.User", "Doctor")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Doctor", "Doctor")
+                        .WithMany("Schedules")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -397,7 +435,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Feedback", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Feedbacks")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -408,7 +446,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Notification", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -424,14 +462,14 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", "Doctor")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Doctor", "Doctor")
+                        .WithMany("Reports")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", "Patient")
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Patient", "Patient")
+                        .WithMany("Reports")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -446,12 +484,85 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Support", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Supports")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Admin", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Admin", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Doctor", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Patient", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithOne()
+                        .HasForeignKey("Domain.Entities.Patient", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("Notifications");
+
+                    b.Navigation("Supports");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Admin", b =>
+                {
+                    b.Navigation("AdminActions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Reports");
+
+                    b.Navigation("Schedules");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Patient", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Reports");
                 });
 #pragma warning restore 612, 618
         }

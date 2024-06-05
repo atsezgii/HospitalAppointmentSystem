@@ -12,6 +12,9 @@ namespace Persistence.Contexts
             _configuration = configuration;
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public DbSet<Report> PatientReports { get; set; }
@@ -34,6 +37,12 @@ namespace Persistence.Contexts
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Doctor>().ToTable("Doctors");
+            modelBuilder.Entity<Patient>().ToTable("Patients");
+            modelBuilder.Entity<Admin>().ToTable("Admins");
+
 
             base.OnModelCreating(modelBuilder);
         }

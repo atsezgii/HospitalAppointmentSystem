@@ -14,7 +14,7 @@ namespace Domain.Entities
         public DateTime AvailableStartTime { get; set; }
         public DateTime AvailableEndTime { get; set; }
         //public int SlotDuration { get; set; } // Dakika cinsinden her randevu süresi (örneğin, 60 dakika)
-        public virtual User Doctor { get; set; }
+        public virtual Doctor Doctor { get; set; }
 
 
     }

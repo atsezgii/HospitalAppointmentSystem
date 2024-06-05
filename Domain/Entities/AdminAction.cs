@@ -14,7 +14,7 @@ namespace Domain.Entities
         public int AdminId { get; set; }
         public ActionType ActionType { get; set; }
         public string Details { get; set; }
-        public User Admin { get; set; }
+        public virtual Admin Admin { get; set; }
 
 
     }

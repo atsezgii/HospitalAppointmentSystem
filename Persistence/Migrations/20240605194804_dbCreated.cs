@@ -22,7 +22,7 @@ namespace Persistence.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -34,83 +34,42 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AdminActions",
+                name: "Admins",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AdminId = table.Column<int>(type: "int", nullable: false),
-                    ActionType = table.Column<int>(type: "int", nullable: false),
-                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdminActions", x => x.Id);
+                    table.PrimaryKey("PK_Admins", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AdminActions_Users_AdminId",
-                        column: x => x.AdminId,
+                        name: "FK_Admins_Users_Id",
+                        column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointments",
+                name: "Doctors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Specialty = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.PrimaryKey("PK_Doctors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Users_DoctorId",
-                        column: x => x.DoctorId,
+                        name: "FK_Doctors_Users_Id",
+                        column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_Users_PatientId",
-                        column: x => x.PatientId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DoctorSchedules",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    AvailableDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AvailableStartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AvailableEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    isActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DoctorSchedules", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DoctorSchedules_Users_DoctorId",
-                        column: x => x.DoctorId,
+                        name: "FK_Doctors_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -147,10 +106,10 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     NotificationType = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SentAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -161,6 +120,30 @@ namespace Persistence.Migrations
                     table.PrimaryKey("PK_Notifications", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Notifications_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Patients_Users_Id",
+                        column: x => x.Id,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Patients_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -194,6 +177,89 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AdminActions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AdminId = table.Column<int>(type: "int", nullable: false),
+                    ActionType = table.Column<int>(type: "int", nullable: false),
+                    Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdminActions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AdminActions_Admins_AdminId",
+                        column: x => x.AdminId,
+                        principalTable: "Admins",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DoctorSchedules",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    AvailableDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AvailableStartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AvailableEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DoctorSchedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DoctorSchedules_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    isActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PatientReports",
                 columns: table => new
                 {
@@ -219,15 +285,15 @@ namespace Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PatientReports_Users_DoctorId",
+                        name: "FK_PatientReports_Doctors_DoctorId",
                         column: x => x.DoctorId,
-                        principalTable: "Users",
+                        principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PatientReports_Users_PatientId",
+                        name: "FK_PatientReports_Patients_PatientId",
                         column: x => x.PatientId,
-                        principalTable: "Users",
+                        principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -246,6 +312,11 @@ namespace Persistence.Migrations
                 name: "IX_Appointments_PatientId",
                 table: "Appointments",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Doctors_UserId",
+                table: "Doctors",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DoctorSchedules_DoctorId",
@@ -278,6 +349,11 @@ namespace Persistence.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Patients_UserId",
+                table: "Patients",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Supports_UserId",
                 table: "Supports",
                 column: "UserId");
@@ -305,7 +381,16 @@ namespace Persistence.Migrations
                 name: "Supports");
 
             migrationBuilder.DropTable(
+                name: "Admins");
+
+            migrationBuilder.DropTable(
                 name: "Appointments");
+
+            migrationBuilder.DropTable(
+                name: "Doctors");
+
+            migrationBuilder.DropTable(
+                name: "Patients");
 
             migrationBuilder.DropTable(
                 name: "Users");
