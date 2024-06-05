@@ -3,7 +3,7 @@ using Domain.Entities;
 
 namespace Application.Repositories
 {
-    public interface IPatientReportRepository : IAsyncRepository<Report>, IRepository<Report>
+    public interface IReportRepository : IAsyncRepository<Report>, IRepository<Report>
     {
     }
 }
