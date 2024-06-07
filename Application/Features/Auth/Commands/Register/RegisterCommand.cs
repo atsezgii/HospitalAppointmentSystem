@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Auth.Commands.Register
 {
+    //Validations will be added 
     public class RegisterCommand : IRequest<RegisterUserResponse>
     {
         public string Email { get; set; }
