@@ -15,7 +15,6 @@ namespace Domain.Entities
 
         public ICollection<Feedback> Feedbacks { get; set; } //Bir user birden fazla feedback verebilir
         public ICollection<Notification> Notifications { get; set; }
-        public ICollection<Support> Supports { get; set; }
 
 
     }

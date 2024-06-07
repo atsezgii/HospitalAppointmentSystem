@@ -21,7 +21,7 @@ namespace Persistence.Contexts
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AdminAction> AdminActions { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<Support> Supports{ get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
