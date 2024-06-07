@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <Compile Remove="Features\Doctors\**" />
+    <EmbeddedResource Remove="Features\Doctors\**" />
+    <None Remove="Features\Doctors\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Doctors\Commands\Create\" />
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Admin : User
+    public class Admin : Entity
     {
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<AdminAction> AdminActions { get; set; }
     }
 }

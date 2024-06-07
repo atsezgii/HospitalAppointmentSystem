@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Patient : User
+    public class Patient : Entity
     {
         public int UserId { get; set; }
         public virtual User User { get; set; }
