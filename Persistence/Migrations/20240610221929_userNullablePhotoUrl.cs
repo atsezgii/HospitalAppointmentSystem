@@ -5,14 +5,14 @@
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class nullableUpdate : Migration
+    public partial class userNullablePhotoUrl : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Specialty",
-                table: "Doctors",
+                name: "PhotoUrl",
+                table: "Users",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -23,8 +23,8 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Specialty",
-                table: "Doctors",
+                name: "PhotoUrl",
+                table: "Users",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",

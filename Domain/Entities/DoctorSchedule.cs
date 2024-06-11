@@ -9,11 +9,12 @@ namespace Domain.Entities
 {
     public class DoctorSchedule : Entity
     {
-        public int DoctorId { get; set; }
         public DateTime AvailableDate { get; set; }
-        public DateTime AvailableStartTime { get; set; }
-        public DateTime AvailableEndTime { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         //public int SlotDuration { get; set; } // Dakika cinsinden her randevu süresi (örneğin, 60 dakika)
+
+        public int DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
 
 

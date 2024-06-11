@@ -13,7 +13,8 @@ namespace Domain.Entities
     {
 
         public NotificationType NotificationType { get; set; }
-        public string Message { get; set; }
+        public string MessageTitle { get; set; }
+        public string MessageContent { get; set; }
         public DateTime SentAt { get; set; }
         public int UserId { get; set; }
         public virtual User User { get; set; }

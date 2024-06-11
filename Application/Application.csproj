@@ -7,19 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\Doctors\**" />
-    <EmbeddedResource Remove="Features\Doctors\**" />
-    <None Remove="Features\Doctors\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.9.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Appointment\Queries\" />
+    <Folder Include="Features\Departments\Queries\" />
+    <Folder Include="Features\Doctors\Queries\" />
+    <Folder Include="Features\Patients\Queries\" />
   </ItemGroup>
 
 </Project>

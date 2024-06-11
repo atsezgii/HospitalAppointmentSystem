@@ -22,5 +22,8 @@ namespace Domain.Entities
         public int DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
 
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
+
     }
 }

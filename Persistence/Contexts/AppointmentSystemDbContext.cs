@@ -17,6 +17,8 @@ namespace Persistence.Contexts
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
+        public DbSet<Department> Departments { get; set; }
+
         public DbSet<Report> PatientReports { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AdminAction> AdminActions { get; set; }
