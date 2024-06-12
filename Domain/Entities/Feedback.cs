@@ -9,11 +9,15 @@ namespace Domain.Entities
 {
     public class Feedback : Entity
     {
-        public string FeedbackTitle { get; set; }
-        public string FeedbackText { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public int Rating { get; set; }
         public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual User User{ get; set; }
+        //public int? PatientId { get; set; }
+        //public virtual Patient Patient { get; set; }
+        //public int? DoctorId { get; set; }
+        //public virtual Doctor Doctor { get; set; }
 
     }
 }

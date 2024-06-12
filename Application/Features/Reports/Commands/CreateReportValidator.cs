@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Application.Features.Reports.Commands
 {
-    public enum UserRole
+    public class CreateReportValidator
     {
-        Admin = 0,
-        Doctor = 1,
-        Patient = 2
     }
 }

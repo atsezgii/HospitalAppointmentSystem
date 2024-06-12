@@ -1,25 +1,17 @@
-﻿using Core.DataAccess;
-using Domain.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Application.Features.Reports.Commands
 {
-   
-    public class Report:Entity
+    public class CreateReportResponse
     {
+        public int Id { get; set; }
         public int PatientId { get; set; }
-        public virtual Patient Patient { get; set; }
-
         public int DoctorId { get; set; }
-        public virtual Doctor Doctor { get; set; }
-
         public int AppointmentId { get; set; }
-        public virtual Appointment Appointment { get; set; }
-
         public string ReportTitle { get; set; }
         public string ReportDetails { get; set; }
     }

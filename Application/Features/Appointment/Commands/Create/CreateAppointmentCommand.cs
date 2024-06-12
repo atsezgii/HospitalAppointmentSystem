@@ -3,7 +3,6 @@
 using Application.Repositories;
 using Application.Services.DoctorService;
 using Application.Services.PatientService;
-using Application.Services.UserService;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;

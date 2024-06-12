@@ -22,7 +22,10 @@
     <Folder Include="Features\Appointment\Queries\" />
     <Folder Include="Features\Departments\Queries\" />
     <Folder Include="Features\Doctors\Queries\" />
+    <Folder Include="Features\Feedbacks\Queries\" />
+    <Folder Include="Features\Notifications\Queries\" />
     <Folder Include="Features\Patients\Queries\" />
+    <Folder Include="Features\Reports\Queries\" />
   </ItemGroup>
 
 </Project>

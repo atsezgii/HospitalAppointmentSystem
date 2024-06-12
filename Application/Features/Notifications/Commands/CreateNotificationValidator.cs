@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Application.Features.Notifications.Commands
 {
-    public enum SupportStatus
+    public class CreateNotificationValidator
     {
-        Open=0,
-        InProgress=1,
-        Resolved=2,
-        Closed=3
     }
 }

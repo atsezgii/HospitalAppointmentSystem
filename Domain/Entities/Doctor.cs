@@ -9,12 +9,14 @@ namespace Domain.Entities
 {
     public class Doctor:User
     {
-        public string? Specialty { get; set; }
+        public string? SpecialistLevel { get; set; }
+        public int YearsOfExperience { get; set; }
+        public string Biography { get; set; }
         public int DepartmentId { get; set; }
-        public Department Department { get; set; }
-        public ICollection<DoctorSchedule> Schedules { get; set; }
-        public ICollection<Appointment> Appointments { get; set; }
-        public ICollection<Report> Reports { get; set; }
-        public ICollection<Feedback> Feedbacks { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual ICollection<DoctorSchedule> Schedules { get; set; }
+        public virtual ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<Report> Reports { get; set; }
+        //public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

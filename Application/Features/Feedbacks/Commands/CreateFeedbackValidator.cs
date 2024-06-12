@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Application.Features.Feedbacks.Commands
 {
-    public enum ReportTitle
+    public class CreateFeedbackValidator
     {
-        Asthma=0,
-        Hypertension=1,
-        Anxiety=2,
     }
 }

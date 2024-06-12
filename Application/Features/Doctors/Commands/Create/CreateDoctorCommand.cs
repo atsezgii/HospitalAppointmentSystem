@@ -22,8 +22,8 @@ namespace Application.Features.Doctors.Commands.Create
         public string? Address { get; set; }
         public string Password { get; set; }
         public int DepartmentId { get; set; }
-        public string BloodType { get; set; }
-        public string? Specialty { get; set; }
+        public string? SpecialistLevel { get; set; }
+        public string Biography { get; set; }
 
         public class CreateDoctorCommandHandler : IRequestHandler<CreateDoctorCommand, CreateDoctorResponse>
         {
