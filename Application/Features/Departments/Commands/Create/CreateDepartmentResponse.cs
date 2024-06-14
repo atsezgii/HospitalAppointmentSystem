@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Commands.Create
 {
-    internal class CreateDepartmentResponse
+    public class CreateDepartmentResponse
     {
+        public int Id { get; set; }
+        public string DepartmentName { get; set; }
+        public string DepartmentDescription { get; set; }
     }
 }

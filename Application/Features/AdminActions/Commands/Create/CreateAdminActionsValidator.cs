@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Reports.Commands
+namespace Application.Features.AdminActions.Commands.Create
 {
-    public class CreateReportValidator
+    internal class CreateAdminActionsValidator
     {
     }
 }

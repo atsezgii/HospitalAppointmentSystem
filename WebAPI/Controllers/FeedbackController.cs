@@ -1,4 +1,4 @@
-﻿using Application.Features.Feedbacks.Commands;
+﻿using Application.Features.Feedbacks.Commands.Create;
 using Application.Features.Patients.Commands.Create;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -8,20 +8,13 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FeedbackController : ControllerBase
+    public class FeedbackController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public FeedbackController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
-
         [HttpPost()]
         public async Task<IActionResult> Add([FromBody] CreateFeedbackCommand command)
         {
-            await _mediator.Send(command);
-            return Created();
+            CreateFeedbackResponse response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

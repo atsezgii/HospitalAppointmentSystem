@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Reports.Commands
+namespace Application.Features.Reports.Commands.Create
 {
-    public class CreateReportCommand:IRequest<CreateReportResponse>
+    public class CreateReportCommand : IRequest<CreateReportResponse>
     {
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
@@ -23,7 +23,7 @@ namespace Application.Features.Reports.Commands
             private readonly IMapper _mapper;
             private readonly IReportRepository _reportRepository;
 
-            public CreateReportCommandHandler(IMapper mapper,IReportRepository reportRepository )
+            public CreateReportCommandHandler(IMapper mapper, IReportRepository reportRepository)
             {
                 _mapper = mapper;
                 _reportRepository = reportRepository;

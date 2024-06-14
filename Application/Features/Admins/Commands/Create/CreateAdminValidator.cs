@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Feedbacks.Commands
+namespace Application.Features.Admins.Commands.Create
 {
-    public class CreateFeedbackValidator
+    public class CreateAdminValidator
     {
     }
 }

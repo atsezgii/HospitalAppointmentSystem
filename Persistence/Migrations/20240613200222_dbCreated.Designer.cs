@@ -12,7 +12,7 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppointmentSystemDbContext))]
-    [Migration("20240612220802_dbCreated")]
+    [Migration("20240613200222_dbCreated")]
     partial class dbCreated
     {
         /// <inheritdoc />
@@ -344,8 +344,8 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()

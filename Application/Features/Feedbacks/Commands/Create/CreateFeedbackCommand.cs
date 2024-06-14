@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Feedbacks.Commands
+namespace Application.Features.Feedbacks.Commands.Create
 {
-    public class CreateFeedbackCommand:IRequest<CreateFeedbackResponse>
+    public class CreateFeedbackCommand : IRequest<CreateFeedbackResponse>
     {
         public string Title { get; set; }
         public string Description { get; set; }

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Notifications.Commands
+namespace Application.Features.Notifications.Commands.Create
 {
     public class CreateNotificationCommand : IRequest<CreateNotificationResponse>
     {
@@ -24,7 +24,7 @@ namespace Application.Features.Notifications.Commands
             private readonly IMapper _mapper;
             private readonly INotificationRepository _notificationRepository;
 
-            public CreateNotificationCommandHandler(IMapper mapper,INotificationRepository notificationRepository)
+            public CreateNotificationCommandHandler(IMapper mapper, INotificationRepository notificationRepository)
             {
                 _mapper = mapper;
                 _notificationRepository = notificationRepository;

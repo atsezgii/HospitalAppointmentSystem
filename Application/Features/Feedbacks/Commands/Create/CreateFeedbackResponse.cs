@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Feedbacks.Commands
+namespace Application.Features.Feedbacks.Commands.Create
 {
     public class CreateFeedbackResponse
     {

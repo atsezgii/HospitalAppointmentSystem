@@ -8,20 +8,15 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientController : ControllerBase
+    public class PatientController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public PatientController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
         [HttpPost()]
         public async Task<IActionResult> Add([FromBody] CreatePatientCommand command)
         {
-            await _mediator.Send(command);
-            return Created();
+            CreatePatientResponse response = await _mediator.Send(command);
+            return Ok(response);
+
         }
     }
 }

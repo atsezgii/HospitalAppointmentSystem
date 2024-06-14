@@ -1,4 +1,4 @@
-﻿using Application.Features.Reports.Commands;
+﻿using Application.Features.Reports.Commands.Create;
 using AutoMapper;
 using Domain.Entities;
 

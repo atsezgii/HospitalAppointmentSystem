@@ -1,4 +1,4 @@
-﻿using Application.Features.Notifications.Commands;
+﻿using Application.Features.Notifications.Commands.Create;
 using Application.Features.Patients.Commands.Create;
 using AutoMapper;
 using Domain.Entities;

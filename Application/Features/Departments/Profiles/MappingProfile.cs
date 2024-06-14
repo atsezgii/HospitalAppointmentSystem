@@ -1,4 +1,6 @@
 ﻿using Application.Features.Departments.Commands.Create;
+using Application.Features.Departments.Queries.GetById;
+using Application.Features.Departments.Queries.GetList;
 using Application.Features.Patients.Commands.Create;
 using AutoMapper;
 using Domain.Entities;
@@ -16,6 +18,8 @@ namespace Application.Features.Departments.Profiles
         {
             CreateMap<Department, CreateDepartmentCommand>().ReverseMap();
             CreateMap<Department, CreateDepartmentResponse>().ReverseMap();
+            CreateMap<Department, GetByIdDepartmentResponse>().ReverseMap();
+            CreateMap<Department, GetListDepartmentResponse>().ReverseMap();
 
         }
     }

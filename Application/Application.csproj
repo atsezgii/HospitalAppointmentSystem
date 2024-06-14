@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Appointment\Queries\" />
-    <Folder Include="Features\Departments\Queries\" />
+    <Folder Include="Features\AdminActions\Commands\Update\" />
+    <Folder Include="Features\DoctorSchedule\Queries\" />
     <Folder Include="Features\Doctors\Queries\" />
     <Folder Include="Features\Feedbacks\Queries\" />
     <Folder Include="Features\Notifications\Queries\" />
