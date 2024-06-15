@@ -1,4 +1,6 @@
 ﻿using Application.Features.Feedbacks.Commands.Create;
+using Application.Features.Feedbacks.Queries.GetById;
+using Application.Features.Feedbacks.Queries.GetList;
 using Application.Features.Patients.Commands.Create;
 using AutoMapper;
 using Domain.Entities;
@@ -16,6 +18,8 @@ namespace Application.Features.Feedbacks.Profiles
         {
             CreateMap<Feedback, CreateFeedbackResponse>().ReverseMap();
             CreateMap<Feedback, CreateFeedbackCommand>().ReverseMap();
+            CreateMap<Feedback, GetByIdFeedbackResponse>().ReverseMap();
+            CreateMap<Feedback, GetListFeedbackResponse>().ReverseMap();
 
         }
     }

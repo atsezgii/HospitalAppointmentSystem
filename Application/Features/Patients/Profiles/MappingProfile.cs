@@ -1,4 +1,6 @@
 ﻿using Application.Features.Patients.Commands.Create;
+using Application.Features.Patients.Queries.GetById;
+using Application.Features.Patients.Queries.GetList;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -14,6 +16,8 @@ namespace Application.Features.Patients.Profiles
         public MappingProfile() {
             CreateMap<Patient, CreatePatientCommand>().ReverseMap();
             CreateMap<Patient, CreatePatientResponse>().ReverseMap();
+            CreateMap<Patient, GetByIdPatientResponse>().ReverseMap();
+            CreateMap<Patient, GetListPatientResponse>().ReverseMap();
 
         }
     }

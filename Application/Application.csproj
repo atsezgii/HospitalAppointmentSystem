@@ -20,12 +20,6 @@
 
   <ItemGroup>
     <Folder Include="Features\AdminActions\Commands\Update\" />
-    <Folder Include="Features\DoctorSchedule\Queries\" />
-    <Folder Include="Features\Doctors\Queries\" />
-    <Folder Include="Features\Feedbacks\Queries\" />
-    <Folder Include="Features\Notifications\Queries\" />
-    <Folder Include="Features\Patients\Queries\" />
-    <Folder Include="Features\Reports\Queries\" />
   </ItemGroup>
 
 </Project>

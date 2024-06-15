@@ -1,12 +1,8 @@
 ﻿using Application.Features.Notifications.Commands.Create;
-using Application.Features.Patients.Commands.Create;
+using Application.Features.Notifications.Queries.GetById;
+using Application.Features.Notifications.Queries.GetList;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Notifications.Profiles
 {
@@ -16,6 +12,8 @@ namespace Application.Features.Notifications.Profiles
         {
             CreateMap<Notification, CreateNotificationCommand>().ReverseMap();
             CreateMap<Notification, CreateNotificationResponse>().ReverseMap();
+            CreateMap<Notification, GetByIdNotificationResponse>().ReverseMap();
+            CreateMap<Notification, GetListNotificationResponse>().ReverseMap();
 
         }
     }

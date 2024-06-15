@@ -1,5 +1,7 @@
 ﻿using Application.Features.Doctors.Commands.Create;
 using Application.Features.DoctorSchedule.Commands;
+using Application.Features.DoctorSchedule.Queries.GetById;
+using Application.Features.DoctorSchedule.Queries.GetList;
 using AutoMapper;
 using Domain.Entities;
 
@@ -11,6 +13,8 @@ namespace Application.Features.DoctorSchedule.Profiles
         {
             CreateMap<Domain.Entities.DoctorSchedule, CreateDoctorScheduleResponse>().ReverseMap();
             CreateMap<Domain.Entities.DoctorSchedule, CreateDoctorScheduleCommand>().ReverseMap();
+            CreateMap<Domain.Entities.DoctorSchedule, GetByIdDoctorScheduleResponse>().ReverseMap();
+            CreateMap<Domain.Entities.DoctorSchedule, GetListDoctorScheduleResponse>().ReverseMap();
 
         }
     }
