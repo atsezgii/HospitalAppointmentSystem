@@ -1,5 +1,6 @@
 ﻿using Application.Features.AdminActions.Commands.Create;
 using Application.Features.AdminActions.Commands.Delete;
+using Application.Features.AdminActions.Commands.Update;
 using Application.Features.AdminActions.Queries.GetById;
 using Application.Features.AdminActions.Queries.GetList;
 using MediatR;
@@ -38,6 +39,12 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetAll([FromQuery] GetListQuery query)
         {
             var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateAdminActionCommand command)
+        {
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

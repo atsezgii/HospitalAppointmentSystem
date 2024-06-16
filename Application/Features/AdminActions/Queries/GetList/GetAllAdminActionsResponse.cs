@@ -13,5 +13,6 @@ namespace Application.Features.AdminActions.Queries.GetList
         public int AdminId { get; set; }
         public ActionType ActionType { get; set; }
         public string Details { get; set; }
+        public bool isActive{ get; set; }
     }
 }

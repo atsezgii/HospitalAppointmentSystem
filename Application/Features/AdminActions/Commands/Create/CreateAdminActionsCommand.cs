@@ -17,6 +17,7 @@ namespace Application.Features.AdminActions.Commands.Create
         public ActionType ActionType { get; set; }
         public string ActionDescription { get; set; }
         public string Details { get; set; }
+        public bool isActive { get; set; }
 
 
         public class CreateAdminActionsCommandHandler : IRequestHandler<CreateAdminActionsCommand, CreateAdminActionsResponse>

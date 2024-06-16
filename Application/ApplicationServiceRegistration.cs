@@ -1,4 +1,5 @@
-﻿using Application.Services.DoctorService;
+﻿using Application.Services.AdminService;
+using Application.Services.DoctorService;
 using Application.Services.PatientService;
 using Core.Application.Pipelines.Validation;
 using FluentValidation;
@@ -25,6 +26,7 @@ namespace Application
             });
             services.AddScoped<IPatientService, PatientManager>();
             services.AddScoped<IDoctorSevice, DoctorManager>();
+            services.AddScoped<IAdminService, AdminManager>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
