@@ -10,7 +10,8 @@ namespace Application.Features.Notifications.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Notification, CreateNotificationCommand>().ReverseMap();
+            CreateMap<Notification, CreateNotificationCommand>().ReverseMap()
+                 .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => true));
             CreateMap<Notification, CreateNotificationResponse>().ReverseMap();
             CreateMap<Notification, GetByIdNotificationResponse>().ReverseMap();
             CreateMap<Notification, GetListNotificationResponse>().ReverseMap();

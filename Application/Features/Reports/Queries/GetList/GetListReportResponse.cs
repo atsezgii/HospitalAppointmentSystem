@@ -14,5 +14,6 @@ namespace Application.Features.Reports.Queries.GetList
         public int AppointmentId { get; set; }
         public string ReportTitle { get; set; }
         public string ReportDetails { get; set; }
+        public bool isActive { get; set; }
     }
 }

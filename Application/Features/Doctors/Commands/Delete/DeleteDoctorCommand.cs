@@ -1,11 +1,6 @@
 ﻿using Application.Repositories;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Doctors.Commands.Delete
 {
@@ -24,12 +19,13 @@ namespace Application.Features.Doctors.Commands.Delete
 
             public async Task Handle(DeleteDoctorCommand request, CancellationToken cancellationToken)
             {
-                Doctor doctor = await _doctorRepository.GetAsync(d=> d.Id == request.Id);
+                Doctor? doctor = await _doctorRepository.GetAsync(d=> d.Id == request.Id);
                 if (doctor == null)
                 {
                     throw new Exception("Data not found");
                 }
-                await _doctorRepository.DeleteAsync(doctor);
+                doctor.isActive = false;
+                await _doctorRepository.UpdateAsync(doctor);
             }
         }
     }

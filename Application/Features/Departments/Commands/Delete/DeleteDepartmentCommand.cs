@@ -1,11 +1,6 @@
 ﻿using Application.Repositories;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Departments.Commands.Delete
 {
@@ -29,7 +24,8 @@ namespace Application.Features.Departments.Commands.Delete
                 {
                     throw new Exception("Data not found");
                 }
-                await _departmentRepository.DeleteAsync(department);
+                department.isActive = false;
+                await _departmentRepository.UpdateAsync(department);
             }
         }
     }

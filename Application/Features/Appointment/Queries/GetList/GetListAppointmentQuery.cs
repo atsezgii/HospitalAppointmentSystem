@@ -30,7 +30,7 @@ namespace Application.Features.Appointment.Queries.GetList
             {
                 List<Domain.Entities.Appointment> appointments = await _appointmentRepository.GetListAsync();
                 List<GetListAppointmentResponse> response = _mapper.Map<List<GetListAppointmentResponse>>(appointments);
-                return response;
+                return response.Where(a=>a.isActive).ToList();
             }
         }
     }

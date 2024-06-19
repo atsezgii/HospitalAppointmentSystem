@@ -23,11 +23,13 @@ namespace Application.Features.AdminActions.Commands.Delete
             public async Task Handle(DeleteAdminActionsCommand request, CancellationToken cancellationToken)
             {
                 AdminAction? adminAction = await _adminActionRepository.GetAsync(a => a.Id == request.Id);
-                if (adminAction != null)
+                if (adminAction == null)
                 {
-                    adminAction.isActive = false;
-                    await _adminActionRepository.UpdateAsync(adminAction);
+                    throw new Exception("Data not found");
+
                 }
+                adminAction.isActive = false;
+                await _adminActionRepository.UpdateAsync(adminAction);
             }
         }
     }

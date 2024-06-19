@@ -11,7 +11,8 @@ namespace Application.Features.DoctorSchedule.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Domain.Entities.DoctorSchedule, CreateDoctorScheduleResponse>().ReverseMap();
+            CreateMap<Domain.Entities.DoctorSchedule, CreateDoctorScheduleResponse>().ReverseMap()
+                  .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => true));
             CreateMap<Domain.Entities.DoctorSchedule, CreateDoctorScheduleCommand>().ReverseMap();
             CreateMap<Domain.Entities.DoctorSchedule, GetByIdDoctorScheduleResponse>().ReverseMap();
             CreateMap<Domain.Entities.DoctorSchedule, GetListDoctorScheduleResponse>().ReverseMap();

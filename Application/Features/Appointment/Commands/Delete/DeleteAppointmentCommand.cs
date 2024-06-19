@@ -29,7 +29,8 @@ namespace Application.Features.Appointment.Commands.Delete
                     throw new Exception("Data not found");
 
                 }
-                await _appointmentRepository.DeleteAsync(appointment);
+                appointment.isActive = false;
+                await _appointmentRepository.UpdateAsync(appointment);
             }
         }
     }

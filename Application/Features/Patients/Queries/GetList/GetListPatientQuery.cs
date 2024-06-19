@@ -31,7 +31,7 @@ namespace Application.Features.Patients.Queries.GetList
             {
                 List<Patient> patients= await _patientRepository.GetListAsync();
                 List<GetListPatientResponse> response = _mapper.Map<List<GetListPatientResponse>>(patients);
-                return response;
+                return response.Where(p=>p.isActive).ToList();
             }
         }
     }

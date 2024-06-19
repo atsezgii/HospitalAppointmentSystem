@@ -1,6 +1,8 @@
-﻿using Application.Features.Appointment.Commands.Create;
+﻿using Application.Features.Admins.Commands.Delete;
+using Application.Features.Appointment.Commands.Create;
 using Application.Features.Doctors.Queries.GetList;
 using Application.Features.DoctorSchedule.Commands;
+using Application.Features.DoctorSchedule.Commands.Delete;
 using Application.Features.DoctorSchedule.Queries.GetById;
 using Application.Features.DoctorSchedule.Queries.GetList;
 using MediatR;
@@ -32,6 +34,13 @@ namespace WebAPI.Controllers
         {
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            DeleteDoctorScheduleCommand command = new() { Id = id };
+            await _mediator.Send(command);
+            return Ok("Deleted");
         }
     }
 }

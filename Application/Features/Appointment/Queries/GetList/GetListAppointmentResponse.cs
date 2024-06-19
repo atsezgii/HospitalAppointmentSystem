@@ -15,5 +15,6 @@ namespace Application.Features.Appointment.Queries.GetList
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
         public int DepartmentId { get; set; }
+        public bool isActive { get; set; }
     }
 }

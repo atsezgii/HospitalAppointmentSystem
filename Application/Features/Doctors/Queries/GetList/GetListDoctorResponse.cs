@@ -21,5 +21,6 @@ namespace Application.Features.Doctors.Queries.GetList
         public int DepartmentId { get; set; }
         public string? SpecialistLevel { get; set; }
         public string Biography { get; set; }
+        public bool isActive{ get; set; }
     }
 }

@@ -16,7 +16,8 @@ namespace Application.Features.Feedbacks.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Feedback, CreateFeedbackResponse>().ReverseMap();
+            CreateMap<Feedback, CreateFeedbackResponse>().ReverseMap()
+                 .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => true));
             CreateMap<Feedback, CreateFeedbackCommand>().ReverseMap();
             CreateMap<Feedback, GetByIdFeedbackResponse>().ReverseMap();
             CreateMap<Feedback, GetListFeedbackResponse>().ReverseMap();

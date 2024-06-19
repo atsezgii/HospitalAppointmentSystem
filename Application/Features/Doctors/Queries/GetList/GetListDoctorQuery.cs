@@ -29,7 +29,7 @@ namespace Application.Features.Doctors.Queries.GetList
             {
                 List<Doctor> doctors= await _doctorRepository.GetListAsync();
                 List<GetListDoctorResponse> response = _mapper.Map<List<GetListDoctorResponse>>(doctors);
-                return response;
+                return response.Where(d=>d.isActive).ToList();
             }
         }
     }

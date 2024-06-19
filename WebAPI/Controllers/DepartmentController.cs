@@ -1,7 +1,9 @@
 ﻿using Application.Features.Admins.Commands.Delete;
+using Application.Features.Appointment.Commands.Update;
 using Application.Features.Appointment.Queries.GetList;
 using Application.Features.Departments.Commands.Create;
 using Application.Features.Departments.Commands.Delete;
+using Application.Features.Departments.Commands.Update;
 using Application.Features.Departments.Queries.GetById;
 using Application.Features.Departments.Queries.GetList;
 using Application.Features.Doctors.Commands.Create;
@@ -41,6 +43,12 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetAll([FromQuery] GetListDepartmentQuery query)
         {
             var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateDepartmentCommand command)
+        {
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
     }

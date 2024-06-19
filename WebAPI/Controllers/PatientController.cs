@@ -1,6 +1,5 @@
-﻿using Application.Features.Auth.Commands.Register;
-using Application.Features.Notifications.Queries.GetList;
-using Application.Features.Patients.Commands.Create;
+﻿using Application.Features.Patients.Commands.Create;
+using Application.Features.Patients.Commands.Delete;
 using Application.Features.Patients.Queries.GetById;
 using Application.Features.Patients.Queries.GetList;
 using MediatR;
@@ -33,6 +32,13 @@ namespace WebAPI.Controllers
         {
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            DeletePatientCommand command = new() { Id = id };
+            await _mediator.Send(command);
+            return Ok("Deleted");
         }
     }
 }

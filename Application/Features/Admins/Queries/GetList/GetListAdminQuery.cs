@@ -29,7 +29,7 @@ namespace Application.Features.Admins.Queries.GetList
             {
                 List<Admin> admins = await _adminRepository.GetListAsync();
                 List<GetListAdminResponse> response = _mapper.Map<List<GetListAdminResponse>>(admins);
-                return response;
+                return response.Where(a=>a.isActive).ToList();
             }
         }
     }

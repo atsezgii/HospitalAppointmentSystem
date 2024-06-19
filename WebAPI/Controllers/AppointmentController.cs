@@ -1,10 +1,11 @@
-﻿using Application.Features.Admins.Queries.GetList;
+﻿using Application.Features.Admins.Commands.Delete;
+using Application.Features.Admins.Commands.Update;
 using Application.Features.Appointment.Commands.Create;
+using Application.Features.Appointment.Commands.Delete;
+using Application.Features.Appointment.Commands.Update;
 using Application.Features.Appointment.Queries.GetById;
 using Application.Features.Appointment.Queries.GetList;
-using Application.Features.Patients.Commands.Create;
-using MediatR;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -32,6 +33,19 @@ namespace WebAPI.Controllers
         {
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateAppointmentCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            DeleteAppointmentCommand command = new() { Id = id };
+            await _mediator.Send(command);
+            return Ok("Deleted");
         }
     }
 }

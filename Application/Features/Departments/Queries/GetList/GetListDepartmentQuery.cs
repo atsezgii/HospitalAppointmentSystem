@@ -25,7 +25,7 @@ namespace Application.Features.Departments.Queries.GetList
         {
             List<Department> departments = await _departmentRepository.GetListAsync();
             List<GetListDepartmentResponse> response = _mapper.Map<List<GetListDepartmentResponse>>(departments);
-            return response;
+            return response.Where(d=>d.isActive).ToList();
         }
     }
 }

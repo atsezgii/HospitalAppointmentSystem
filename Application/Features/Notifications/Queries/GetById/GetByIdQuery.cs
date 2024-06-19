@@ -22,13 +22,14 @@ namespace Application.Features.Notifications.Queries.GetById
 
             public async Task<GetByIdNotificationResponse> Handle(GetByIdQuery request, CancellationToken cancellationToken)
             {
-                Notification notification = await _notificationRepository.GetAsync(n => n.Id == request.Id);
-                if (notification == null)
+                Notification notification = await _notificationRepository.GetAsync(n => n.Id == request.Id && n.isActive);
+                if (notification != null)
                 {
-                    throw new Exception("Data not found");
+                    GetByIdNotificationResponse response = _mapper.Map<GetByIdNotificationResponse>(notification);
+                    return response;
                 }
-                GetByIdNotificationResponse response = _mapper.Map<GetByIdNotificationResponse>(notification);
-                return response;
+                return null;
+               
             }
         }
     }

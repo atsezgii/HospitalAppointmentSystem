@@ -25,7 +25,7 @@ namespace Application.Features.Notifications.Queries.GetList
             {
                 List<Notification> notifications = await _notificationRepository.GetListAsync();
                 List<GetListNotificationResponse> responses = _mapper.Map<List<GetListNotificationResponse>>(notifications);
-                return responses;
+                return responses.Where(n=>n.isActive).ToList();
             }
         }
     }

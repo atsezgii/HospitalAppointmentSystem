@@ -1,13 +1,9 @@
-﻿using Application.Features.AdminActions.Commands.Delete;
-using Application.Features.AdminActions.Queries.GetList;
+﻿
 using Application.Features.Admins.Commands.Create;
 using Application.Features.Admins.Commands.Delete;
+using Application.Features.Admins.Commands.Update;
 using Application.Features.Admins.Queries.GetById;
 using Application.Features.Admins.Queries.GetList;
-using Application.Features.Appointment.Commands.Create;
-using Azure;
-using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -43,6 +39,13 @@ namespace WebAPI.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateAdminCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
 
     }
 }

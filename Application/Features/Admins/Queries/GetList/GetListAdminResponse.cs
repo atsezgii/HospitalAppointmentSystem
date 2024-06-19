@@ -20,5 +20,6 @@ namespace Application.Features.Admins.Queries.GetList
         public City City { get; set; }
         public string Address { get; set; }
         public string PhotoUrl { get; set; }
+        public bool isActive{ get; set; }
     }
 }

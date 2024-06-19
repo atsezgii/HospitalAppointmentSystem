@@ -27,5 +27,6 @@ namespace Application.Features.Patients.Queries.GetList
         public string EmergencyContactName { get; set; }
         public string EmergencyContactPhoneNumber { get; set; }
         public string EmergencyContactRelationship { get; set; }
+        public bool isActive { get; set; }    
     }
 }

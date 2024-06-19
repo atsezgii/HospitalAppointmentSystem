@@ -11,5 +11,6 @@ namespace Application.Features.Departments.Queries.GetList
         public int Id { get; set; }
         public string DepartmentName { get; set; }
         public string DepartmentDescription { get; set; }
+        public bool isActive { get; set; }
     }
 }

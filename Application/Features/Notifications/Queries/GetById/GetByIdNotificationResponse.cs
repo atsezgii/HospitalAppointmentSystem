@@ -15,5 +15,6 @@ namespace Application.Features.Notifications.Queries.GetById
         public string Message { get; set; }
         public DateTime SentAt { get; set; }
         public int UserId { get; set; }
+        public bool isActive { get; set; }
     }
 }

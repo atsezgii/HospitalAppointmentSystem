@@ -14,7 +14,8 @@ namespace Application.Features.Patients.Profiles
     public class MappingProfile : Profile
     {
         public MappingProfile() {
-            CreateMap<Patient, CreatePatientCommand>().ReverseMap();
+            CreateMap<Patient, CreatePatientCommand>().ReverseMap()
+                                 .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => true));
             CreateMap<Patient, CreatePatientResponse>().ReverseMap();
             CreateMap<Patient, GetByIdPatientResponse>().ReverseMap();
             CreateMap<Patient, GetListPatientResponse>().ReverseMap();

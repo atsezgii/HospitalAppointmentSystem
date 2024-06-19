@@ -24,7 +24,7 @@ namespace Application.Features.Feedbacks.Queries.GetList
             {
                 List<Feedback> feedbacks = await _feedBackRepository.GetListAsync();
                 List<GetListFeedbackResponse> response = _mapper.Map<List<GetListFeedbackResponse>>(feedbacks);
-                return response;
+                return response.Where(f=>f.isActive).ToList();
             }
         }
     }

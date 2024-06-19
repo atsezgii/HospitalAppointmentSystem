@@ -10,7 +10,8 @@ namespace Application.Features.Reports.Profiles
     {
         public MappingProfile()
         {
-            CreateMap<Report, CreateReportCommand>().ReverseMap();
+            CreateMap<Report, CreateReportCommand>().ReverseMap()
+                                 .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => true));
             CreateMap<Report, CreateReportResponse>().ReverseMap();
             CreateMap<Report, GetByIdReportResponse>().ReverseMap();
             CreateMap<Report, GetListReportResponse>().ReverseMap();

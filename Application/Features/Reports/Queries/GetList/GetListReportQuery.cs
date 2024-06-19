@@ -31,7 +31,7 @@ namespace Application.Features.Reports.Queries.GetList
             {
                 List<Report> reports= await _reportRepository.GetListAsync();
                 List<GetListReportResponse> response = _mapper.Map<List<GetListReportResponse>>(reports);
-                return response;
+                return response.Where(r=>r.isActive).ToList();
             }
         }
     }

@@ -1,5 +1,7 @@
-﻿using Application.Features.DoctorSchedule.Queries.GetList;
+﻿using Application.Features.Doctors.Commands.Delete;
+using Application.Features.DoctorSchedule.Queries.GetList;
 using Application.Features.Feedbacks.Commands.Create;
+using Application.Features.Feedbacks.Commands.Delete;
 using Application.Features.Feedbacks.Queries.GetById;
 using Application.Features.Feedbacks.Queries.GetList;
 using Application.Features.Patients.Commands.Create;
@@ -31,6 +33,13 @@ namespace WebAPI.Controllers
         {
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            DeleteFeedbackCommand command = new() { Id = id };
+            await _mediator.Send(command);
+            return Ok("Deleted");
         }
     }
 }

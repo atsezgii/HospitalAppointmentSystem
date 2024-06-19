@@ -27,7 +27,7 @@ namespace Application.Features.DoctorSchedule.Queries.GetList
             {
                 List<Domain.Entities.DoctorSchedule> doctorSchedules = await _doctorScheduleRepository.GetListAsync();
                 List<GetListDoctorScheduleResponse> responses = _mapper.Map<List<GetListDoctorScheduleResponse>>(doctorSchedules);
-                return responses;
+                return responses.Where(ds => ds.isActive).ToList();
             }
         }
     }
