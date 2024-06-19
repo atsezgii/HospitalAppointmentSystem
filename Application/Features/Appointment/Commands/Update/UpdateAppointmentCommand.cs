@@ -6,6 +6,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,19 +31,22 @@ namespace Application.Features.Appointment.Commands.Update
             private readonly IPatientService _patientService;
             private readonly IDoctorSevice _doctorSevice;
             private readonly IDepartmentService _departmentService;
+            private readonly ILogger<UpdateAppointmentCommand> _logger;
 
             public UpdateAppointmentCommandHandler(
                 IAppointmentRepository appointmentRepository,
                 IMapper mapper,
                 IPatientService patientService,
                 IDoctorSevice doctorSevice,
-                IDepartmentService departmentService)
+                IDepartmentService departmentService,
+                ILogger<UpdateAppointmentCommand> logger)
             {
                 _appointmentRepository = appointmentRepository;
                 _mapper = mapper;
                 _patientService = patientService;
                 _doctorSevice = doctorSevice;
                 _departmentService = departmentService;
+                _logger = logger;
             }
 
             public async Task<UpdateAppointmentResponse> Handle(UpdateAppointmentCommand request, CancellationToken cancellationToken)
@@ -74,7 +78,7 @@ namespace Application.Features.Appointment.Commands.Update
                 }
                 _mapper.Map(request, appointment);
                 await _appointmentRepository.UpdateAsync(appointment);
-
+                _logger.LogInformation("Appointment Updated");
                 UpdateAppointmentResponse response = _mapper.Map<UpdateAppointmentResponse>(appointment);
                 return response;
             }

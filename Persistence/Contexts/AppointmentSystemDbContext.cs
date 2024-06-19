@@ -27,7 +27,7 @@ namespace Persistence.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string db = _configuration.GetSection("ConnectionStrings").GetSection("SqlServer").Value;
+            string? db = _configuration.GetSection("ConnectionStrings").GetSection("SqlServer").Value;
             optionsBuilder.UseSqlServer(db);
             base.OnConfiguring(optionsBuilder);
         }

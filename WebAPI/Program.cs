@@ -1,8 +1,46 @@
 using Persistence;
 using Core;
 using Application;
+using Serilog;
+using Serilog.Core;
+using Serilog.Sinks.MSSqlServer;
+using System.Data;
+using Serilog.Events;
+using WebAPI.Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
+ILogEventEnricher[] enrichers = new ILogEventEnricher[]
+{
+    new CustomUserNameColumn()
+};
+
+// Serilog konfigürasyonu
+var columnOptions = new ColumnOptions();
+columnOptions.Store.Remove(StandardColumn.Properties);
+columnOptions.AdditionalColumns = new List<SqlColumn>
+{
+    new SqlColumn { ColumnName = "UserName", DataType = SqlDbType.NVarChar, DataLength = 50 },
+};
+
+var connectionString = builder.Configuration.GetConnectionString("SqlServer");
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .Enrich.With(enrichers)
+    .Enrich.WithEnvironmentName()
+    .WriteTo.Console()
+    .WriteTo.File("logs/logs.txt")
+    .WriteTo.Seq("http://localhost:5341")
+    .WriteTo.MSSqlServer(
+        connectionString: builder.Configuration.GetConnectionString("SqlServer"),
+        sinkOptions: new MSSqlServerSinkOptions { TableName = "Logs", AutoCreateSqlTable = true },
+        columnOptions: columnOptions
+    )
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddPersistenceServices();
 builder.Services.AddCoreServices();
@@ -22,10 +60,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<UserNameLoggingMiddleware>(); // Middleware'i ekleyin
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseSerilogRequestLogging();
 
 app.MapControllers();
 

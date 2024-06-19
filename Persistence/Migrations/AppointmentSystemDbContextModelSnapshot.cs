@@ -56,7 +56,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("AdminId");
 
-                    b.ToTable("AdminActions");
+                    b.ToTable("AdminActions", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Appointment", b =>
@@ -102,7 +102,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Department", b =>
@@ -135,7 +135,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.DoctorSchedule", b =>
@@ -174,7 +174,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.ToTable("DoctorSchedules");
+                    b.ToTable("DoctorSchedules", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Feedback", b =>
@@ -215,7 +215,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -259,7 +259,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Report", b =>
@@ -307,7 +307,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("PatientReports");
+                    b.ToTable("PatientReports", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

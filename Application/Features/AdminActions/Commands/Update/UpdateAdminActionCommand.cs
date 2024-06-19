@@ -1,6 +1,7 @@
 ﻿using Application.Repositories;
 using Application.Services.AdminService;
 using AutoMapper;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -33,12 +34,12 @@ namespace Application.Features.AdminActions.Commands.Update
                 Admin? admin = await _adminService.GetByIdAsync(request.AdminId);
                 if (admin == null)
                 {
-                    throw new Exception("No such admin data");
+                    throw new BusinessException("No such admin data");
                 }
                 AdminAction? adminAction = await _adminActionRepository.GetAsync(aa => aa.Id == request.Id);
                 if (adminAction == null)
                 {
-                    throw new Exception("No such adminAction data");
+                    throw new BusinessException("No such adminAction data");
                 }
 
                 // AdminAction mapAdminAction = _mapper.Map<AdminAction>(request);
