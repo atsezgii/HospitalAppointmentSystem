@@ -1,5 +1,7 @@
-﻿using Application.Features.Patients.Commands.Create;
+﻿using Application.Features.Doctors.Commands.Update;
+using Application.Features.Patients.Commands.Create;
 using Application.Features.Patients.Commands.Delete;
+using Application.Features.Patients.Commands.Update;
 using Application.Features.Patients.Queries.GetById;
 using Application.Features.Patients.Queries.GetList;
 using MediatR;
@@ -39,6 +41,12 @@ namespace WebAPI.Controllers
             DeletePatientCommand command = new() { Id = id };
             await _mediator.Send(command);
             return Ok("Deleted");
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdatePatientCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

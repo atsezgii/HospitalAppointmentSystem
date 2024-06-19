@@ -1,12 +1,9 @@
-﻿using Application.Features.Notifications.Commands.Delete;
-using Application.Features.Patients.Commands.Create;
-using Application.Features.Patients.Queries.GetList;
+﻿
 using Application.Features.Reports.Commands.Create;
 using Application.Features.Reports.Commands.Delete;
+using Application.Features.Reports.Commands.Update;
 using Application.Features.Reports.Queries.GetById;
 using Application.Features.Reports.Queries.GetList;
-using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -41,6 +38,12 @@ namespace WebAPI.Controllers
             DeleteReportCommand command = new() { Id = id };
             await _mediator.Send(command);
             return Ok("Deleted");
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateReportCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

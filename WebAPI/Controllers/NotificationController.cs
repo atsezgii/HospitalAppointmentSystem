@@ -1,8 +1,10 @@
 ﻿using Application.Features.Doctors.Commands.Delete;
 using Application.Features.Feedbacks.Commands;
+using Application.Features.Feedbacks.Commands.Update;
 using Application.Features.Feedbacks.Queries.GetList;
 using Application.Features.Notifications.Commands.Create;
 using Application.Features.Notifications.Commands.Delete;
+using Application.Features.Notifications.Commands.Update;
 using Application.Features.Notifications.Queries.GetById;
 using Application.Features.Notifications.Queries.GetList;
 using MediatR;
@@ -41,6 +43,12 @@ namespace WebAPI.Controllers
             DeleteNotificationCommand command = new() { Id = id };
             await _mediator.Send(command);
             return Ok("Deleted");
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateNotificationCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
     }

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Services.UserService
+namespace Application.Services.AppointmentService
 {
-    public interface IUserService
+    public interface IAppointmentService
     {
-        Task<User?> GetByIdAsync(int id);
+        Task<Appointment?> GetByIdAsync(int id);
 
     }
 }

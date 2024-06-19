@@ -1,4 +1,6 @@
-﻿using Application.Features.Notifications.Commands.Create;
+﻿using Application.Features.Feedbacks.Commands.Update;
+using Application.Features.Notifications.Commands.Create;
+using Application.Features.Notifications.Commands.Update;
 using Application.Features.Notifications.Queries.GetById;
 using Application.Features.Notifications.Queries.GetList;
 using AutoMapper;
@@ -15,6 +17,8 @@ namespace Application.Features.Notifications.Profiles
             CreateMap<Notification, CreateNotificationResponse>().ReverseMap();
             CreateMap<Notification, GetByIdNotificationResponse>().ReverseMap();
             CreateMap<Notification, GetListNotificationResponse>().ReverseMap();
+            CreateMap<Notification, UpdateNotificationCommand>().ReverseMap();
+            CreateMap<Notification, UpdateNotificationResponse>().ReverseMap();
 
         }
     }

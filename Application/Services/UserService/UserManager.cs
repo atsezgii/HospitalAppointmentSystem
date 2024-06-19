@@ -10,10 +10,11 @@ namespace Application.Services.UserService
         {
             _userRepository = userRepository;
         }
-        public async Task<User?> GetAsync(int id)
+        public async Task<User?> GetByIdAsync(int id)
         {
             User? user = await _userRepository.GetAsync(u=>u.Id == id); 
             return user;
         }
+
     }
 }

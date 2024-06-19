@@ -1,14 +1,9 @@
 ﻿using Application.Features.Feedbacks.Commands.Create;
+using Application.Features.Feedbacks.Commands.Update;
 using Application.Features.Feedbacks.Queries.GetById;
 using Application.Features.Feedbacks.Queries.GetList;
-using Application.Features.Patients.Commands.Create;
 using AutoMapper;
 using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Feedbacks.Profiles
 {
@@ -21,6 +16,8 @@ namespace Application.Features.Feedbacks.Profiles
             CreateMap<Feedback, CreateFeedbackCommand>().ReverseMap();
             CreateMap<Feedback, GetByIdFeedbackResponse>().ReverseMap();
             CreateMap<Feedback, GetListFeedbackResponse>().ReverseMap();
+            CreateMap<Feedback, UpdateFeedbackResponse>().ReverseMap();
+            CreateMap<Feedback, UpdateFeedbackCommand>().ReverseMap();
 
         }
     }

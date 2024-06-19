@@ -18,12 +18,4 @@
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\DoctorSchedule\Commands\Update\" />
-    <Folder Include="Features\Feedbacks\Commands\Update\" />
-    <Folder Include="Features\Notifications\Commands\Update\" />
-    <Folder Include="Features\Patients\Commands\Update\" />
-    <Folder Include="Features\Reports\Commands\Update\" />
-  </ItemGroup>
-
 </Project>

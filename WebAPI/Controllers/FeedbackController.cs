@@ -1,7 +1,9 @@
 ﻿using Application.Features.Doctors.Commands.Delete;
+using Application.Features.DoctorSchedule.Commands.Update;
 using Application.Features.DoctorSchedule.Queries.GetList;
 using Application.Features.Feedbacks.Commands.Create;
 using Application.Features.Feedbacks.Commands.Delete;
+using Application.Features.Feedbacks.Commands.Update;
 using Application.Features.Feedbacks.Queries.GetById;
 using Application.Features.Feedbacks.Queries.GetList;
 using Application.Features.Patients.Commands.Create;
@@ -40,6 +42,12 @@ namespace WebAPI.Controllers
             DeleteFeedbackCommand command = new() { Id = id };
             await _mediator.Send(command);
             return Ok("Deleted");
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateFeedbackCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

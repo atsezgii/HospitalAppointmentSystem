@@ -1,7 +1,9 @@
 ﻿using Application.Services.AdminService;
+using Application.Services.AppointmentService;
 using Application.Services.DepartmentService;
 using Application.Services.DoctorService;
 using Application.Services.PatientService;
+using Application.Services.UserService;
 using Core.Application.Pipelines.Validation;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,13 +24,13 @@ namespace Application
             {
                 config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-
-
             });
             services.AddScoped<IPatientService, PatientManager>();
             services.AddScoped<IDoctorSevice, DoctorManager>();
             services.AddScoped<IDepartmentService, DepartmentManager>();
             services.AddScoped<IAdminService, AdminManager>();
+            services.AddScoped<IAppointmentService, AppointmentManager>();
+            services.AddScoped<IUserService, UserManager>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
