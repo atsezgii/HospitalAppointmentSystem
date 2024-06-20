@@ -1,16 +1,18 @@
 ﻿using Application.Repositories;
 using AutoMapper;
 using Core.Application.Pipelines.Logging;
+using Core.Application.Requests;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Doctors.Queries.GetList
 {
-    public class GetListDoctorQuery : IRequest<List<GetListDoctorResponse>>
+    public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorResponse>>
     {
-        public int Page { get; set; }
-        public int PageSize { get; set; }
-        public class GetListDoctorQueryHandler : IRequestHandler<GetListDoctorQuery, List<GetListDoctorResponse>>
+        public PageRequest PageRequest { get; set; }
+        public class GetListDoctorQueryHandler : IRequestHandler<GetListDoctorQuery, GetListResponse<GetListDoctorResponse>>
         {
             private readonly IDoctorRepository _doctorRepository;
             private readonly IMapper _mapper;
@@ -20,11 +22,13 @@ namespace Application.Features.Doctors.Queries.GetList
                 _doctorRepository = doctorRepository;
                 _mapper = mapper;
             }
-            public async Task<List<GetListDoctorResponse>> Handle(GetListDoctorQuery request, CancellationToken cancellationToken)
+            public async Task<GetListResponse<GetListDoctorResponse>> Handle(GetListDoctorQuery request, CancellationToken cancellationToken)
             {
-                List<Doctor> doctors= await _doctorRepository.GetListAsync();
-                List<GetListDoctorResponse> response = _mapper.Map<List<GetListDoctorResponse>>(doctors);
-                return response.Where(d=>d.isActive).ToList();
+                 IPaginate<Doctor> doctors= await _doctorRepository.GetListAsync(
+                    index: request.PageRequest.Page,
+                    size: request.PageRequest.PageSize);
+                var response = _mapper.Map<GetListResponse<GetListDoctorResponse>>(doctors);
+                return response;
             }
         }
     }

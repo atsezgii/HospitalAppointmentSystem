@@ -2,6 +2,9 @@
 using Application.Features.Patients.Queries.GetList;
 using Application.Repositories;
 using AutoMapper;
+using Core.Application.Requests;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -12,11 +15,10 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Reports.Queries.GetList
 {
-    public class GetListReportQuery : IRequest<List<GetListReportResponse>>
+    public class GetListReportQuery : IRequest<GetListResponse<GetListReportResponse>>
     {
-        public int Page { get; set; }
-        public int PageSize { get; set; }
-        public class GetListReportQueryHandler : IRequestHandler<GetListReportQuery, List<GetListReportResponse>>
+        public PageRequest PageRequest { get; set; }
+        public class GetListReportQueryHandler : IRequestHandler<GetListReportQuery, GetListResponse<GetListReportResponse>>
         {
             private readonly IReportRepository _reportRepository;
             private readonly IMapper _mapper;
@@ -27,11 +29,13 @@ namespace Application.Features.Reports.Queries.GetList
                 _reportRepository = reportRepository;   
             }
 
-            public async Task<List<GetListReportResponse>> Handle(GetListReportQuery request, CancellationToken cancellationToken)
+            public async Task<GetListResponse<GetListReportResponse>> Handle(GetListReportQuery request, CancellationToken cancellationToken)
             {
-                List<Report> reports= await _reportRepository.GetListAsync();
-                List<GetListReportResponse> response = _mapper.Map<List<GetListReportResponse>>(reports);
-                return response.Where(r=>r.isActive).ToList();
+                IPaginate<Report> reports= await _reportRepository.GetListAsync(
+                    index: request.PageRequest.Page,
+                    size: request.PageRequest.PageSize);
+                GetListResponse<GetListReportResponse> response = _mapper.Map<GetListResponse<GetListReportResponse>>(reports);
+                return response;
             }
         }
     }

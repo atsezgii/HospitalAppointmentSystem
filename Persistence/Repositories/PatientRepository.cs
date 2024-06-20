@@ -1,7 +1,7 @@
 ﻿
 
 using Application.Repositories;
-using Core.DataAccess;
+using Core.Persistence.Repositories;
 using Domain.Entities;
 using Persistence.Contexts;
 

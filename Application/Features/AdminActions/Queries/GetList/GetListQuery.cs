@@ -1,20 +1,17 @@
 ﻿using Application.Repositories;
 using AutoMapper;
+using Core.Application.Requests;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.AdminActions.Queries.GetList
 {
-    public class GetListQuery : IRequest<List<GetAllAdminActionsResponse>>
+    public class GetListQuery : IRequest<GetListResponse<GetAllAdminActionsResponse>>
     {
-        public int Page { get; set; }
-        public int PageSize { get; set; }
-        public class GetListQueryHandler : IRequestHandler<GetListQuery, List<GetAllAdminActionsResponse>>
+        public PageRequest PageRequest { get; set; }
+        public class GetListQueryHandler : IRequestHandler<GetListQuery, GetListResponse<GetAllAdminActionsResponse>>
         {
             private readonly IAdminActionRepository _adminActionRepository;
             private readonly IMapper _mapper;
@@ -25,11 +22,13 @@ namespace Application.Features.AdminActions.Queries.GetList
                 _mapper = mapper;
             }
 
-            public async Task<List<GetAllAdminActionsResponse>> Handle(GetListQuery request, CancellationToken cancellationToken)
+            public async Task<GetListResponse<GetAllAdminActionsResponse>> Handle(GetListQuery request, CancellationToken cancellationToken)
             {
-                List<AdminAction> adminActions = await _adminActionRepository.GetListAsync();
-                List<GetAllAdminActionsResponse> response = _mapper.Map<List<GetAllAdminActionsResponse>>(adminActions);
-                return response.Where(a => a.isActive).ToList();
+                IPaginate<AdminAction> adminActions = await _adminActionRepository.GetListAsync(
+                    index: request.PageRequest.Page,
+                    size: request.PageRequest.PageSize);
+                var response = _mapper.Map<GetListResponse<GetAllAdminActionsResponse>>(adminActions);
+                return response;
             }
         }
     }

@@ -3,6 +3,8 @@ using Application.Features.Patients.Commands.Update;
 using Application.Features.Patients.Queries.GetById;
 using Application.Features.Patients.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.Patients.Profiles
@@ -15,6 +17,7 @@ namespace Application.Features.Patients.Profiles
             CreateMap<Patient, CreatePatientResponse>().ReverseMap();
             CreateMap<Patient, GetByIdPatientResponse>().ReverseMap();
             CreateMap<Patient, GetListPatientResponse>().ReverseMap();
+            CreateMap<IPaginate<Patient>, GetListResponse<GetListPatientResponse>>().ReverseMap();
             CreateMap<Patient, UpdatePatientCommand>().ReverseMap();
             CreateMap<Patient, UpdatePatientResponse>().ReverseMap();
 

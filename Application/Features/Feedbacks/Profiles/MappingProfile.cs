@@ -3,6 +3,8 @@ using Application.Features.Feedbacks.Commands.Update;
 using Application.Features.Feedbacks.Queries.GetById;
 using Application.Features.Feedbacks.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.Feedbacks.Profiles
@@ -16,6 +18,7 @@ namespace Application.Features.Feedbacks.Profiles
             CreateMap<Feedback, CreateFeedbackCommand>().ReverseMap();
             CreateMap<Feedback, GetByIdFeedbackResponse>().ReverseMap();
             CreateMap<Feedback, GetListFeedbackResponse>().ReverseMap();
+            CreateMap<IPaginate<Feedback>, GetListResponse<GetListFeedbackResponse>>().ReverseMap();
             CreateMap<Feedback, UpdateFeedbackResponse>().ReverseMap();
             CreateMap<Feedback, UpdateFeedbackCommand>().ReverseMap();
 

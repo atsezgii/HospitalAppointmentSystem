@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DataAccess
+namespace Core.Persistence.Repositories
 {
     public interface IRepository<T>
     {

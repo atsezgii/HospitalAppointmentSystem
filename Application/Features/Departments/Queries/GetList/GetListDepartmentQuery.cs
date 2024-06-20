@@ -1,17 +1,18 @@
 ﻿using Application.Repositories;
 using AutoMapper;
+using Core.Application.Requests;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Departments.Queries.GetList
 {
-    public class GetListDepartmentQuery : IRequest<List<GetListDepartmentResponse>>
+    public class GetListDepartmentQuery : IRequest<GetListResponse<GetListDepartmentResponse>>
     {
-        public int Page { get; set; }
-        public int PageSize { get; set; }
+        public PageRequest PageRequest { get; set; }
     }
-
-    public class GetListDepartmentQueryHandler : IRequestHandler<GetListDepartmentQuery, List<GetListDepartmentResponse>>
+    public class GetListDepartmentQueryHandler : IRequestHandler<GetListDepartmentQuery, GetListResponse<GetListDepartmentResponse>>
     {
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IMapper _mapper;
@@ -21,11 +22,13 @@ namespace Application.Features.Departments.Queries.GetList
             _departmentRepository = departmentRepository;
             _mapper = mapper;
         }
-        public async Task<List<GetListDepartmentResponse>> Handle(GetListDepartmentQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListDepartmentResponse>> Handle(GetListDepartmentQuery request, CancellationToken cancellationToken)
         {
-            List<Department> departments = await _departmentRepository.GetListAsync();
-            List<GetListDepartmentResponse> response = _mapper.Map<List<GetListDepartmentResponse>>(departments);
-            return response.Where(d=>d.isActive).ToList();
+            IPaginate<Department> departments = await _departmentRepository.GetListAsync(
+                    index: request.PageRequest.Page,
+                    size: request.PageRequest.PageSize);
+            var response = _mapper.Map<GetListResponse<GetListDepartmentResponse>>(departments);
+            return response;
         }
     }
 }

@@ -2,14 +2,9 @@
 using Application.Features.Appointment.Commands.Update;
 using Application.Features.Appointment.Queries.GetById;
 using Application.Features.Appointment.Queries.GetList;
-using Application.Features.Patients.Commands.Create;
 using AutoMapper;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 
 namespace Application.Features.Appointment.Profiles
 {
@@ -21,6 +16,7 @@ namespace Application.Features.Appointment.Profiles
                 .ForMember(dest => dest.isActive, opt => opt.MapFrom(src => true)); 
             CreateMap<Domain.Entities.Appointment, CreateAppointmentResponse>().ReverseMap();
             CreateMap<Domain.Entities.Appointment, GetListAppointmentResponse>().ReverseMap();
+            CreateMap<IPaginate<Domain.Entities.Appointment>, GetListResponse<GetListAppointmentResponse>>().ReverseMap();
             CreateMap<Domain.Entities.Appointment, GetByIdAppointmentResponse>().ReverseMap();
             CreateMap<Domain.Entities.Appointment, UpdateAppointmentCommand>().ReverseMap();
             CreateMap<Domain.Entities.Appointment, UpdateAppointmentResponse>().ReverseMap();

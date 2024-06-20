@@ -3,6 +3,8 @@ using Application.Features.Doctors.Commands.Update;
 using Application.Features.Doctors.Queries.GetById;
 using Application.Features.Doctors.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 namespace Application.Features.Doctors.Profiles
 {
@@ -15,6 +17,7 @@ namespace Application.Features.Doctors.Profiles
             CreateMap<Doctor, CreateDoctorResponse>().ReverseMap();
             CreateMap<Doctor, GetByIdDoctorResponse>().ReverseMap();
             CreateMap<Doctor, GetListDoctorResponse>().ReverseMap();
+            CreateMap<IPaginate<Doctor>, GetListResponse<GetListDoctorResponse>>().ReverseMap();
             CreateMap<Doctor, UpdateDoctorResponse>().ReverseMap();
             CreateMap<Doctor, UpdateDoctorCommand>().ReverseMap();
 

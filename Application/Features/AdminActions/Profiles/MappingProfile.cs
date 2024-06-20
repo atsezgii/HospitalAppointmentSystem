@@ -3,6 +3,8 @@ using Application.Features.AdminActions.Commands.Update;
 using Application.Features.AdminActions.Queries.GetById;
 using Application.Features.AdminActions.Queries.GetList;
 using AutoMapper;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 
 namespace Application.Features.AdminActions.Profiles
@@ -16,6 +18,7 @@ namespace Application.Features.AdminActions.Profiles
             CreateMap<AdminAction, CreateAdminActionsResponse>().ReverseMap();
             CreateMap<AdminAction, GetByIdAdminActionResponse>().ReverseMap();
             CreateMap<AdminAction, GetAllAdminActionsResponse>().ReverseMap();
+            CreateMap<IPaginate<AdminAction>, GetListResponse<GetAllAdminActionsResponse>>().ReverseMap();
             CreateMap<AdminAction, UpdateAdminActionResponse>().ReverseMap();
             CreateMap<AdminAction, UpdateAdminActionCommand>().ReverseMap();
 

@@ -1,4 +1,4 @@
-﻿using Core.DataAccess;
+﻿using Core.Persistence.Repositories;
 using Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-   
+
 
     public class Appointment:Entity
     {

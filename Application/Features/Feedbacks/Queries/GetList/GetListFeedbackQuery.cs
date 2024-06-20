@@ -1,16 +1,17 @@
 ﻿using Application.Repositories;
 using AutoMapper;
+using Core.Application.Requests;
+using Core.Application.Responses;
+using Core.Persistence.Paging;
 using Domain.Entities;
 using MediatR;
 
 namespace Application.Features.Feedbacks.Queries.GetList
 {
-    public class GetListFeedbackQuery : IRequest<List<GetListFeedbackResponse>>
+    public class GetListFeedbackQuery : IRequest<GetListResponse<GetListFeedbackResponse>>
     {
-        public int Page { get; set; }
-        public int PageSize { get; set; }
-
-        public class GetListFeedbackQueryHandler : IRequestHandler<GetListFeedbackQuery, List<GetListFeedbackResponse>>
+        public PageRequest PageRequest { get; set; }
+        public class GetListFeedbackQueryHandler : IRequestHandler<GetListFeedbackQuery, GetListResponse<GetListFeedbackResponse>>
         {
             private readonly IMapper _mapper;
             private readonly IFeedBackRepository _feedBackRepository;
@@ -20,11 +21,13 @@ namespace Application.Features.Feedbacks.Queries.GetList
                 _mapper = mapper;
                 _feedBackRepository = feedBackRepository;
             }
-            public async Task<List<GetListFeedbackResponse>> Handle(GetListFeedbackQuery request, CancellationToken cancellationToken)
+            public async Task<GetListResponse<GetListFeedbackResponse>> Handle(GetListFeedbackQuery request, CancellationToken cancellationToken)
             {
-                List<Feedback> feedbacks = await _feedBackRepository.GetListAsync();
-                List<GetListFeedbackResponse> response = _mapper.Map<List<GetListFeedbackResponse>>(feedbacks);
-                return response.Where(f=>f.isActive).ToList();
+                IPaginate<Feedback> feedbacks = await _feedBackRepository.GetListAsync(
+                    index: request.PageRequest.Page,
+                    size: request.PageRequest.PageSize);
+                var response = _mapper.Map<GetListResponse<GetListFeedbackResponse>>(feedbacks);
+                return response;
             }
         }
     }

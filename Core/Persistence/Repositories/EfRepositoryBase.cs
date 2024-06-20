@@ -6,20 +6,22 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Persistence.Paging;
 
-namespace Core.DataAccess
+namespace Core.Persistence.Repositories
 {
     public class EfRepositoryBase<TEntity, TContext> : IRepository<TEntity>, IAsyncRepository<TEntity>
-    
+
         where TContext : DbContext
         where TEntity : Entity
-    { 
+    {
         private readonly TContext Context;
 
         public EfRepositoryBase(TContext context)
         {
             Context = context;
         }
+        public IQueryable<TEntity> Query() => Context.Set<TEntity>();
 
         public void Add(TEntity entity)
         {
@@ -78,16 +80,22 @@ namespace Core.DataAccess
             return await data.FirstOrDefaultAsync(predicate);
         }
 
-        public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
+        public async Task<IPaginate<TEntity>> GetListAsync(
+            Expression<Func<TEntity, bool>>? predicate = null, 
+            Func<IQueryable<TEntity>, 
+            IIncludableQueryable<TEntity, object>>? include = null,
+            int index =0,
+            int size=10,
+            CancellationToken cancellationToken = default)
         {
-            IQueryable<TEntity> data = Context.Set<TEntity>();
+            IQueryable<TEntity> queryable = Query();
 
             if (predicate != null)
-                data = data.Where(predicate);
+                queryable = queryable.Where(predicate);
             if (include != null)
-                data = include(data);
+                queryable = include(queryable);
 
-            return await data.ToListAsync();
+            return await queryable.ToPaginateAsync(index, size,from:0, cancellationToken);
         }
 
         public async Task AddAsync(TEntity entity)
