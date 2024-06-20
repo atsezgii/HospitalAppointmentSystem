@@ -1,13 +1,8 @@
-﻿using Application.Features.Departments.Queries.GetList;
-using Application.Repositories;
+﻿using Application.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Logging;
 using Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Features.Doctors.Queries.GetList
 {

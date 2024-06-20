@@ -4,15 +4,15 @@ using Application.Services.DepartmentService;
 using Application.Services.DoctorService;
 using Application.Services.PatientService;
 using Application.Services.UserService;
+using Core.Application.Pipelines.Logging;
 using Core.Application.Pipelines.Validation;
+using Core.CrossCuttingConcerns.Logging.Serilog.Logger;
+using Core.CrossCuttingConcerns.Logging.Serilog;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Serilog;
+
 
 namespace Application
 {
@@ -20,10 +20,14 @@ namespace Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(config =>
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddMediatR(configuration =>
             {
-                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+                configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
+                configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
+
             });
             services.AddScoped<IPatientService, PatientManager>();
             services.AddScoped<IDoctorSevice, DoctorManager>();
@@ -31,8 +35,25 @@ namespace Application
             services.AddScoped<IAdminService, AdminManager>();
             services.AddScoped<IAppointmentService, AppointmentManager>();
             services.AddScoped<IUserService, UserManager>();
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddSingleton<FileLogger>();
+            services.AddSingleton<MsSqlLogger>();
+
+            services.AddSingleton<LoggerServiceBase>(provider =>
+            {
+                var fileLogger = provider.GetRequiredService<FileLogger>();
+                var msSqlLogger = provider.GetRequiredService<MsSqlLogger>();
+
+                return new LoggerServiceBase
+                {
+                    Logger = new LoggerConfiguration()
+                        .WriteTo.Logger(fileLogger.Logger) // parallel logging
+                        .WriteTo.Logger(msSqlLogger.Logger) // parallel logging
+                        .CreateLogger()
+                };
+            });
+
 
             return services;
         }
