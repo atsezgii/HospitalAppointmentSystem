@@ -1,19 +1,13 @@
-﻿using Core.Persistence.Repositories;
+﻿using Core.Entities;
+using Core.Persistence.Repositories;
 using Domain.Enums;
 
 namespace Domain.Entities
 {
 
-    public class User:Entity
+    public class User:BaseUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
-        public string Email { get; set; }
         public string? PhoneNumber { get; set; }
-
-
         public Gender? Gender { get; set; }
         public string? PhotoUrl { get; set; }
         public DateTime? BirthDate { get; set; }

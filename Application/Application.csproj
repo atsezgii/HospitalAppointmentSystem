@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Auth\Commands\LoginCommand\**" />
+    <EmbeddedResource Remove="Features\Auth\Commands\LoginCommand\**" />
+    <None Remove="Features\Auth\Commands\LoginCommand\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>

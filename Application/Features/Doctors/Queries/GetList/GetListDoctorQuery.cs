@@ -12,6 +12,7 @@ namespace Application.Features.Doctors.Queries.GetList
     public class GetListDoctorQuery : IRequest<GetListResponse<GetListDoctorResponse>>
     {
         public PageRequest PageRequest { get; set; }
+        public string[] RequiredRoles => ["Doctor.GetList"];
         public class GetListDoctorQueryHandler : IRequestHandler<GetListDoctorQuery, GetListResponse<GetListDoctorResponse>>
         {
             private readonly IDoctorRepository _doctorRepository;

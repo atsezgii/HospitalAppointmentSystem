@@ -23,6 +23,8 @@ namespace Persistence
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IFeedBackRepository, FeedbackRepository>();
+            services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
+            services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
             return services;
         }
     }

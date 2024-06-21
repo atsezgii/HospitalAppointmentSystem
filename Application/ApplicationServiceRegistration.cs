@@ -12,6 +12,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Serilog;
+using Core.Application.Pipelines.Authorization;
 
 
 namespace Application
@@ -26,6 +27,7 @@ namespace Application
             {
                 configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
+                configuration.AddOpenBehavior(typeof(AuthorizationBehavior<,>));
                 configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
 
             });

@@ -1,6 +1,7 @@
 using Persistence;
 using Core;
 using Application;
+using Core.Utilities.JWT;
 var builder = WebApplication.CreateBuilder(args);
 
 //ILogEventEnricher[] enrichers = new ILogEventEnricher[]
@@ -35,8 +36,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 //builder.Host.UseSerilog();
 // Add services to the container.
+TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+
 builder.Services.AddPersistenceServices();
-builder.Services.AddCoreServices();
+builder.Services.AddCoreServices(tokenOptions);
 builder.Services.AddApplicationServices();
 builder.Services.AddHttpContextAccessor();
 

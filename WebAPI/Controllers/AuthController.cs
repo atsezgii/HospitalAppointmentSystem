@@ -1,4 +1,5 @@
-﻿using Application.Features.Auth.Commands.Register;
+﻿using Application.Features.Auth.Commands.Login;
+using Application.Features.Auth.Commands.Register;
 using Azure;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -18,5 +19,11 @@ namespace WebAPI.Controllers
             return Ok(response);
 
     }
-}
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginCommand loginCommand)
+        {
+            var response = await _mediator.Send(loginCommand);
+            return Ok(response);
+        }
+    }
 }
