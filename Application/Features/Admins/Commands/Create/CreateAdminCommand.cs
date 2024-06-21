@@ -24,6 +24,7 @@ namespace Application.Features.Admins.Commands.Create
         {
             private readonly IMapper _mapper;
             private readonly IAdminRepository _adminRepository;
+            //private readonly ILiveChatHubService
 
             public CreateAdminCommandHandler(IAdminRepository adminRepository, IMapper mapper)
             {

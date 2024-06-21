@@ -1,11 +1,13 @@
 using Persistence;
 using Core;
 using Application;
+using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Core.Utilities.JWT;
 using Microsoft.IdentityModel.Tokens;
 using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.Utilities.Encryption;
+using Infrastructure.SignalR;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -19,6 +21,7 @@ TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Ge
 builder.Services.AddPersistenceServices();
 builder.Services.AddCoreServices(tokenOptions);
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services
@@ -54,5 +57,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHubs();
 
 app.Run();
