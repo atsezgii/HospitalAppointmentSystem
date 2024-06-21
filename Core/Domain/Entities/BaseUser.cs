@@ -9,5 +9,8 @@ namespace Core.Entities
         public byte[] PasswordSalt { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
+
     }
 }

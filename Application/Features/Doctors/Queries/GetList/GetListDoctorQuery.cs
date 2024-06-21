@@ -25,9 +25,9 @@ namespace Application.Features.Doctors.Queries.GetList
             }
             public async Task<GetListResponse<GetListDoctorResponse>> Handle(GetListDoctorQuery request, CancellationToken cancellationToken)
             {
-                 IPaginate<Doctor> doctors= await _doctorRepository.GetListAsync(
-                    index: request.PageRequest.Page,
-                    size: request.PageRequest.PageSize);
+                IPaginate<Doctor> doctors = await _doctorRepository.GetListAsync(
+                   index: request.PageRequest.Page,
+                   size: request.PageRequest.PageSize);
                 var response = _mapper.Map<GetListResponse<GetListDoctorResponse>>(doctors);
                 return response;
             }

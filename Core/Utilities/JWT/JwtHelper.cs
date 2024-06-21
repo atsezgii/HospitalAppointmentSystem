@@ -24,7 +24,7 @@ namespace Core.Utilities.JWT
 
 
         //jwt yi create edecek ve geriye döndürecek class 41.dk
-        public AccessToken CreateToken(BaseUser user)
+        public AccessToken CreateToken(BaseUser user, List<OperationClaim> operationClaims)
         {
             //özellikleri oku ve tokeni yaz.
             DateTime expirationTime = DateTime.Now.AddMinutes(_tokenOptions.ExpirationTime);
