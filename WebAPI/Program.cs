@@ -16,6 +16,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+//    policy.WithOrigins()
+//    .AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
+
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.WithOrigins("https://localhost:4200", "http://localhost:4200").  //Ýstediðimiz kadar client ekleyebiliyoruz.
+         AllowAnyHeader().
+         AllowAnyMethod().
+         AllowCredentials();
+    });
+});
+
 TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
 builder.Services.AddPersistenceServices();
@@ -57,6 +74,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+//app.UseCors(
+//    opt =>
+//        opt.WithOrigins()
+//            .AllowAnyHeader()
+//            .AllowAnyMethod()
+//            .AllowCredentials()
+//);
+app.UseCors("CorsPolicy");
 app.MapHubs();
 
 app.Run();

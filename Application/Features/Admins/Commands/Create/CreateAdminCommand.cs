@@ -4,6 +4,7 @@ using Core.Application.Pipelines.Logging;
 using Core.Utilities.Hashing;
 using Domain.Entities;
 using Domain.Enums;
+using Infrastructure.SignalR.HubService;
 using MediatR;
 
 namespace Application.Features.Admins.Commands.Create
@@ -24,12 +25,13 @@ namespace Application.Features.Admins.Commands.Create
         {
             private readonly IMapper _mapper;
             private readonly IAdminRepository _adminRepository;
-            //private readonly ILiveChatHubService
+            private readonly ILiveChatHubService _liveChatHubService;
 
-            public CreateAdminCommandHandler(IAdminRepository adminRepository, IMapper mapper)
+            public CreateAdminCommandHandler(IAdminRepository adminRepository, IMapper mapper, ILiveChatHubService liveChatHubService)
             {
                 _adminRepository = adminRepository;
                 _mapper = mapper;
+                _liveChatHubService = liveChatHubService;
             }
 
             public async Task<CreateAdminResponse> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
@@ -42,7 +44,7 @@ namespace Application.Features.Admins.Commands.Create
                 admin.PasswordHash = passwordHash;
 
                 await _adminRepository.AddAsync(admin);
-
+                await _liveChatHubService.GetMessageAsync("hghjghjgh");
                 CreateAdminResponse response = _mapper.Map<CreateAdminResponse>(admin);
                 return response;
             }

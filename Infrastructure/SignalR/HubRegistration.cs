@@ -8,7 +8,7 @@ namespace Infrastructure.SignalR
     {
         public static void MapHubs(this WebApplication webApplication)
         {
-            webApplication.MapHub<LiveChatHub>("/livechats-hub");//()=>endpoint name/route
+            webApplication.MapHub<LiveChatHub>("/chatHub");//()=>endpoint name/route
         }
     }
 }
