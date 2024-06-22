@@ -1,21 +1,20 @@
-﻿using Infrastructure.SignalR.Hubs;
-using Microsoft.AspNetCore.SignalR;
-
+﻿using Infrastructure.SignalR.Entities;
 
 namespace Infrastructure.SignalR.HubService
 {
     public class LiveChatHubService : ILiveChatHubService
     {
-        private readonly IHubContext<LiveChatHub> _hubContext;
+        private readonly List<ChatMessage> _messages = new();
 
-        public LiveChatHubService(IHubContext<LiveChatHub> hubContext)
+        public Task SendMessageAsync(string user, string message)
         {
-            _hubContext = hubContext;
+            _messages.Add(new ChatMessage { User = user, Message = message, Timestamp = DateTime.Now });
+            return Task.CompletedTask;
         }
 
-        public async Task GetMessageAsync(string message) //ang servisteki procedureName
+        public Task<List<ChatMessage>> GetMessagesAsync()
         {
-            await _hubContext.Clients.All.SendAsync("receiveLiveChatMessage", message);
+            return Task.FromResult(_messages);
         }
     }
 }

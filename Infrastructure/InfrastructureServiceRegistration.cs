@@ -7,7 +7,7 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            services.AddTransient<ILiveChatHubService, LiveChatHubService>();
+            services.AddScoped<ILiveChatHubService, LiveChatHubService>();
             services.AddSignalR();
             return services;
         }

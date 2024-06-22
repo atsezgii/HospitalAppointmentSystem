@@ -25,13 +25,11 @@ namespace Application.Features.Admins.Commands.Create
         {
             private readonly IMapper _mapper;
             private readonly IAdminRepository _adminRepository;
-            private readonly ILiveChatHubService _liveChatHubService;
 
-            public CreateAdminCommandHandler(IAdminRepository adminRepository, IMapper mapper, ILiveChatHubService liveChatHubService)
+            public CreateAdminCommandHandler(IAdminRepository adminRepository, IMapper mapper)
             {
                 _adminRepository = adminRepository;
                 _mapper = mapper;
-                _liveChatHubService = liveChatHubService;
             }
 
             public async Task<CreateAdminResponse> Handle(CreateAdminCommand request, CancellationToken cancellationToken)
@@ -44,7 +42,6 @@ namespace Application.Features.Admins.Commands.Create
                 admin.PasswordHash = passwordHash;
 
                 await _adminRepository.AddAsync(admin);
-                await _liveChatHubService.GetMessageAsync("hghjghjgh");
                 CreateAdminResponse response = _mapper.Map<CreateAdminResponse>(admin);
                 return response;
             }
